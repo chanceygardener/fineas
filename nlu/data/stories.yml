@@ -28,3 +28,18 @@ stories:
   - action: utter_did_that_help
   - intent: deny
   - action: utter_goodbye
+
+- story: toggle lights
+  step:
+    - intent: toggle_lights
+    - action: action_toggle_light
+
+- story: tell the time
+  step:
+    - intent: current_time
+    - action: action_tell_time
+
+- story: thanks_fineas
+  step:
+    - intent: thanks
+    - action: utter_your_welcome

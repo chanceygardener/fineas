@@ -41,40 +41,30 @@ def nlg(intent_name):
     return random.choice(rmap[intent_name])
 
 
-def record_audio(stream, ofname, tmp_path="tmp"):
-
-    # stream = pa_conn.open(format=FORMAT,
-    #                       channels=CHANNELS,
-    #                       rate=RATE,
-    #                       input=True,
-    #                       frames_per_buffer=CHUNK)
-
+def record_audio(stream, ofname, tmp_path=None):
     print("* recording NLU input")
     t = stream.read(CHUNK)
-    # print(t)
-    # print(type(t))
-    # raise ValueError("expected")
-
     frames = [stream.read(CHUNK)
               for i in range(0,
                              int(RATE / CHUNK * RECORD_SECONDS))]
-
     stream.stop_stream()
-    stream.close()
+    # stream.close()
     # pa_conn.terminate()
-    WAVE_OUTPUT_FILENAME = path.join(getcwd(), "tmp", ofname)
-    wf = wave.open(WAVE_OUTPUT_FILENAME, 'wb')
-    wf.setnchannels(CHANNELS)
-    wf.setsampwidth(p.get_sample_size(FORMAT))
-    wf.setframerate(RATE)
-    wf.writeframes(b''.join(frames))
-    wf.close()
+    if tmp_path is not None:
+        WAVE_OUTPUT_FILENAME = path.join(getcwd(), tmp_path, ofname)
+        wf = wave.open(WAVE_OUTPUT_FILENAME, 'wb')
+        wf.setnchannels(CHANNELS)
+        wf.setsampwidth(p.get_sample_size(FORMAT))
+        wf.setframerate(RATE)
+        wf.writeframes(b''.join(frames))
+        wf.close()
+    else:
 
-    # audio = np.frombuffer(audio_bytes).astype(np.int16)
-    # #fs, audio = wav.read(BytesIO(audio_bytes))
-    # print(audio)
-    # print(audio.astype(np.int16))
-    # print("* done recording")
+        audio = np.frombuffer(audio_bytes).astype(np.int16)
+        #fs, audio = wav.read(BytesIO(audio_bytes))
+        print(audio)
+        print(audio.astype(np.int16))
+        print("* done recording")
 
     # stream.stop_stream()
     # stream.close()
@@ -94,8 +84,8 @@ class WakeWordListener:
             model_path=pvporcupine.MODEL_PATH,
             keywords=self.active_words
         )
-        self.stream = self._init_audio_stream()
         self.audio_connection = audio_connection
+        self._init_audio_stream()
         self.target_model = Model(stt_model_path)
         self._tts_server = tts_server
         self._nlu_server = nlu_server
@@ -107,7 +97,7 @@ class WakeWordListener:
         return out_text
 
     def _init_audio_stream(self):
-        return self.audio_connection.open(
+        self.stream = self.audio_connection.open(
             rate=self._porcupine.sample_rate,
             channels=CHANNELS,
             format=FORMAT,
@@ -132,12 +122,11 @@ class WakeWordListener:
         return resp
 
     def run(self):
-        stream = self._open_audio_stream()
         print("listening")
         try:
             while True:
                 #stream = self._open_audio_stream()
-                pcm = stream.read(self._porcupine._frame_length)
+                pcm = self.stream.read(self._porcupine._frame_length)
                 pcm = struct.unpack_from(
                     "h" * self._porcupine.frame_length,
                     pcm)
@@ -154,10 +143,11 @@ class WakeWordListener:
                     # stream.stop_stream()
                     # stream.close()
                     audio = record_audio(
-                        stream, "utterance.wav")
+                        self.stream, "utterance.wav")
                     utt_tmp_path = path.join(getcwd(), "tmp", "utterance.wav")
                     interpreted_text = self._deepspeech_predict(utt_tmp_path)
                     remove(utt_tmp_path)
+                    self.stream.stop_stream()
 
                     # TODO: this should be handled by a rasa action
                     # server
@@ -167,20 +157,15 @@ class WakeWordListener:
                     nl_response = nlg(nlu_resp['intent']['name'])
                     print(f"\nResponding with the following:\n{nl_response}\n")
                     self._request_tts(nl_response)
-                    stream.stop_stream()
-                    stream.close()
-                    # self.audio_connection.terminate()
-                    # # reopen the stream to listen for wake word
-                    # print(p.get_default_input_device_info())
-                    stream = self._open_audio_stream()
+                    self.stream.start_stream()
 
         except KeyboardInterrupt:
             print("Stopping...")
         finally:
             if self._porcupine is not None:
                 self._porcupine.delete()
-            if stream is not None:
-                stream.close()
+            if self.stream is not None:
+                self.stream.close()
 
 
 if __name__ == "__main__":

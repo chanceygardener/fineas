@@ -98,3 +98,29 @@ nlu:
     - how many legs
     - I wonder if you have legs and if so, how many
     - I was curious as to how many legs you have
+
+- intent: thanks
+  examples: |
+    - thanks
+    - thank you
+    - thanks so much
+    - many thanks, Phineas!
+
+- intent: toggle_lights
+  examples: |
+    - can you turn [off](desired_state) the lights
+    - turn [on](desired_state) the lights 
+    - let's [get some light](desired_state) in here
+    - shut the light [off](desired_state)
+    - turn the light [on](desired_state)
+    - will you turn [on](desired_state) the [office](which_light) please?
+
+- intent: current_time
+  examples: |
+    - what time is it?
+    - what's the time?
+    - do you have the time?
+    - got the time?
+    - what's the current time?
+    - can you tell me what time it is?
+    - can you tell us what time it is?

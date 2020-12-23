@@ -7,15 +7,22 @@ services:
       - "/dev/snd:/dev/snd"
     ports:
       - "8000:8000"
+    environment:
+      FLASK_APP: server.py
 
-  rasa:
+  rasa_dialog:
     image: rasa/rasa
     ports:
       - "5005:5005"
+  rasa_action:
+    image: rasa/rasa
+    ports:
+      - "5055:5055"
   stt:
     build: ./stt
     context: ./stt
     dockerfile: ./stt/Dockerfile
+    devices:
+      - "/dev/snd:/dev/snd"
     environment:
       FLASK_APP: server.py
-      
