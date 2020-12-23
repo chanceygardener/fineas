@@ -1,0 +1,39 @@
+{
+	"greet": [
+		"What's up motherfucker?",
+		"How's it going?",
+		"Greetings and salutations",
+		"Hi, stenaaaand"
+			],
+	"goodbye": [
+		"Fare the well, yo"
+	],
+	"affirm": [
+		"Well good to know",
+		"Any context for that dood?"
+	],
+	"deny": [
+		"Alright then, negative Nancy"
+	],
+	"mood_great": [
+		"Glad to hear it you happy bastard"
+	],
+	"mood_unhappy": [
+		"welcome to the world",
+		"One day, I will be programmed to give a fuck"
+	],
+	"bot_challenge": [
+		"No, I'm a squirrel",
+		"Yes, and I am also controlling the geopolitical space, you may know me as Q"
+	],
+	"how_many_legs": [
+		"I've got 23 legs",
+		"about 3",
+		"what makes you think I have legs?"
+	],
+	"fallback": [
+		"Sorry, I didn't quite understand that",
+		"Uuuuh I didn't get that at all",
+		"No fucking clue what you just said there to be honest"
+	]
+}

@@ -1,0 +1,8 @@
+stt/models/*
+tts/mozilla/*
+./nlu/models/
+stt/._deepspeech-0.5.1-models
+stt/._deepspeech-0.6.1-models
+*.wav
+__pycache__/
+tts/__pycache__/

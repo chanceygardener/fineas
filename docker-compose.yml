@@ -1,0 +1,21 @@
+services:
+  tts:
+    build: ./tts/pytts
+    context: ./tts/pytts
+    dockerfile: ./tts/pytts/Dockerfile
+    devices:
+      - "/dev/snd:/dev/snd"
+    ports:
+      - "8000:8000"
+
+  rasa:
+    image: rasa/rasa
+    ports:
+      - "5005:5005"
+  stt:
+    build: ./stt
+    context: ./stt
+    dockerfile: ./stt/Dockerfile
+    environment:
+      FLASK_APP: server.py
+      
