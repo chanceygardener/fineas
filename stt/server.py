@@ -21,14 +21,13 @@ FORMAT = pyaudio.paInt16
 CHANNELS = 1
 RATE = 16000
 RECORD_SECONDS = 5
-WAKE_WORDS = {"fineas", "test"}
-WAKE_WORDS = {"terminator"}
+WAKE_WORDS = {"phineas"}
 STT_MODEL_PATH = "/home/chanceygardener/projects/fineas/stt/models/deepspeech-0.9.3-models.pbmm"
 TTS_SERVER_ADDRESS = "http://0.0.0.0:5000/speak"
-NLU_SERVER_ADDRESS = "http://0.0.0.0:5005/model/parse"
+NLU_SERVER_ADDRESS = "http://0.0.0.0:5005/conversations/default/tracker"
 ACKNOWLEDGEMENTS = {'what can I do you for?', 'yep?',
                     'can I help you?', 'at your service yo', "what's up?"}
-
+WAKE_WORD_MODEL_PATH = "models/phineas_linux_2021-01-22-utc_v1_9_0.ppn"
 
 app = Flask("STT_SERVER")
 
@@ -82,7 +81,8 @@ class WakeWordListener:
         self._porcupine = pvporcupine.create(
             library_path=pvporcupine.LIBRARY_PATH,
             model_path=pvporcupine.MODEL_PATH,
-            keywords=self.active_words
+            keywords=self.active_words,
+            keyword_paths=[WAKE_WORD_MODEL_PATH]
         )
         self.audio_connection = audio_connection
         self._init_audio_stream()
@@ -143,7 +143,7 @@ class WakeWordListener:
                     # stream.stop_stream()
                     # stream.close()
                     audio = record_audio(
-                        self.stream, "utterance.wav")
+                        self.stream, "utterance.wav", tmp_path="tmp")
                     utt_tmp_path = path.join(getcwd(), "tmp", "utterance.wav")
                     interpreted_text = self._deepspeech_predict(utt_tmp_path)
                     remove(utt_tmp_path)

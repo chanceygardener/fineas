@@ -12,6 +12,7 @@ import asyncio
 from rasa_sdk import Action, Tracker
 from rasa_sdk.executor import CollectingDispatcher
 import kasa, random
+from datetime import datetime
 
 
 def generate_response_template():
@@ -35,6 +36,25 @@ class ActionHelloWorld(Action):
 
         return out
 
+class ActionTellTime(Action):
+
+    def name(self) -> Text:
+        return "action_tell_time"
+
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
+        now = datetime.now()
+        as_string = now.strftime("%H:%M %p")
+        response_message = random.choice([
+                f"It's {as_string} right now",
+                f"At the moment, it's {as_string}"
+            ])
+        out = generate_response_template()
+        dispatcher.utter_message(text=response_message)
+
+        return out
 
 class ActionToggleLight(Action):
 

@@ -30,16 +30,16 @@ stories:
   - action: utter_goodbye
 
 - story: toggle lights
-  step:
+  steps:
     - intent: toggle_lights
     - action: action_toggle_light
 
 - story: tell the time
-  step:
+  steps:
     - intent: current_time
     - action: action_tell_time
 
 - story: thanks_fineas
-  step:
+  steps:
     - intent: thanks
     - action: utter_your_welcome

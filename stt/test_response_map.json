@@ -35,5 +35,8 @@
 		"Sorry, I didn't quite understand that",
 		"Uuuuh I didn't get that at all",
 		"No fucking clue what you just said there to be honest"
+	],
+	"toggle_lights": [
+		"I actually can't do that yet, you're programming it now."
 	]
 }
