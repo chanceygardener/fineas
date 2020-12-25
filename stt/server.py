@@ -15,6 +15,8 @@ import struct
 import numpy as np
 from os import path, getcwd, remove
 
+
+DEFAULT_SESSION_ID = "fineas1"
 p = pyaudio.PyAudio()
 CHUNK = 1024
 FORMAT = pyaudio.paInt16
@@ -24,7 +26,7 @@ RECORD_SECONDS = 5
 WAKE_WORDS = {"phineas"}
 STT_MODEL_PATH = "/home/chanceygardener/projects/fineas/stt/models/deepspeech-0.9.3-models.pbmm"
 TTS_SERVER_ADDRESS = "http://0.0.0.0:5000/speak"
-NLU_SERVER_ADDRESS = "http://0.0.0.0:5005/conversations/default/tracker"
+NLU_SERVER_ADDRESS = "http://0.0.0.0:5005/webhooks/rest/webhook"
 ACKNOWLEDGEMENTS = {'what can I do you for?', 'yep?',
                     'can I help you?', 'at your service yo', "what's up?"}
 WAKE_WORD_MODEL_PATH = "models/phineas_linux_2021-01-22-utc_v1_9_0.ppn"
@@ -104,8 +106,15 @@ class WakeWordListener:
             input=True,
             frames_per_buffer=self._porcupine.frame_length)
 
-    def _request_service(self, addr, dat=None):
-        return requests.post(addr, data=dat)
+    def _request_service(self, addr, dat=None, json_payload=None):
+        if dat and json_payload:
+            raise ValueError("One of dat, or json must be set")
+        elif dat:
+            return requests.post(addr, data=dat)
+        elif json_payload:
+            return requests.post(addr, json=json_payload)
+        else:
+            raise ValueError("One of dat, or json must be set")
 
     def _request_tts(self, text):
         self._request_service(self._tts_server, dat={
@@ -116,9 +125,10 @@ class WakeWordListener:
         print("Sending the following text to NLU")
         print(text)
         resp = self._request_service(self._nlu_server,
-                                     dat=json.dumps({
-                                         "text": text
-                                     }))
+                                     json_payload={
+                                         "text": text,
+                                         "sender_id": DEFAULT_SESSION_ID
+                                     })
         return resp
 
     def run(self):

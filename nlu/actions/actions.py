@@ -54,7 +54,7 @@ class ActionTellTime(Action):
         out = generate_response_template()
         dispatcher.utter_message(text=response_message)
 
-        return out
+        return []
 
 class ActionToggleLight(Action):
 
