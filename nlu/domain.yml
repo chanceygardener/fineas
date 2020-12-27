@@ -8,6 +8,9 @@ intents:
   - mood_great
   - mood_unhappy
   - bot_challenge
+  - toggle_lights
+  - current_time
+  - how_many_legs
 
 responses:
   utter_greet:
@@ -29,6 +32,12 @@ responses:
   utter_iamabot:
   - text: "I am a bot, powered by Rasa."
 
+  utter_your_welcome:
+    - text: "You're quite welcome"
+
+actions:
+  - action_tell_time
+  - action_toggle_light
 session_config:
   session_expiration_time: 60
   carry_over_slots_to_new_session: true
