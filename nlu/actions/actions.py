@@ -13,7 +13,17 @@ from rasa_sdk import Action, Tracker
 from rasa_sdk.executor import CollectingDispatcher
 import kasa, random
 from datetime import datetime
+import requests
 
+
+TTS_SERVER_ADDRESS = "http://0.0.0.0:5000/speak"
+
+def tts(text):
+    r = requests.post(TTS_SERVER_ADDRESS, json={
+            "text": text
+        })
+    print(f"TTS server responded with status code: {r.status_code}")
+    return r.ok
 
 def generate_response_template():
     return {
@@ -32,7 +42,7 @@ class ActionHelloWorld(Action):
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
         out = generate_response_template()
-        dispatcher.utter_message(text="Hello World!")
+        tts("hello world")
 
         return out
 
@@ -52,9 +62,9 @@ class ActionTellTime(Action):
                 f"At the moment, it's {as_string}"
             ])
         out = generate_response_template()
-        dispatcher.utter_message(text=response_message)
+        tts(response_message)
 
-        return []
+        return [{"response": response_message}]
 
 class ActionToggleLight(Action):
 

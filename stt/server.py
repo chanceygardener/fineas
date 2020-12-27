@@ -131,7 +131,7 @@ class WakeWordListener:
                                      })
         return resp
 
-    def run(self):
+    def run(self, dbg=False):
         print("listening")
         try:
             while True:
@@ -150,8 +150,6 @@ class WakeWordListener:
                     self._request_tts(random.choice(
                         list(ACKNOWLEDGEMENTS)))
                     # stop this stream
-                    # stream.stop_stream()
-                    # stream.close()
                     audio = record_audio(
                         self.stream, "utterance.wav", tmp_path="tmp")
                     utt_tmp_path = path.join(getcwd(), "tmp", "utterance.wav")
@@ -164,9 +162,9 @@ class WakeWordListener:
                     nlu_resp = self._request_nlu(interpreted_text).json()
                     print("Got this response from NLU")
                     print(nlu_resp)
-                    nl_response = nlg(nlu_resp['intent']['name'])
-                    print(f"\nResponding with the following:\n{nl_response}\n")
-                    self._request_tts(nl_response)
+                    #nl_response = nlg(nlu_resp['intent']['name'])
+                    # print(f"\nResponding with the following:\n{nl_response}\n")
+                    #self._request_tts(nl_response)
                     self.stream.start_stream()
 
         except KeyboardInterrupt:
