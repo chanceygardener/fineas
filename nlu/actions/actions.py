@@ -19,10 +19,15 @@ import requests
 TTS_SERVER_ADDRESS = "http://0.0.0.0:5000/speak"
 
 def tts(text):
-    r = requests.post(TTS_SERVER_ADDRESS, json={
+    print(text)
+    r = requests.post(TTS_SERVER_ADDRESS, data={
             "text": text
         })
+    print(r.reason)
+    print(r.text)
+    print()
     print(f"TTS server responded with status code: {r.status_code}")
+    print("TTS payload")
     return r.ok
 
 def generate_response_template():
@@ -62,9 +67,9 @@ class ActionTellTime(Action):
                 f"At the moment, it's {as_string}"
             ])
         out = generate_response_template()
-        tts(response_message)
+        dispatcher.utter_message(text=response_message)
 
-        return [{"response": response_message}]
+        return out
 
 class ActionToggleLight(Action):
 

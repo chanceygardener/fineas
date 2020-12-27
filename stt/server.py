@@ -126,8 +126,8 @@ class WakeWordListener:
         print(text)
         resp = self._request_service(self._nlu_server,
                                      json_payload={
-                                         "text": text,
-                                         "sender_id": DEFAULT_SESSION_ID
+                                         "message": text,
+                                         "sender": DEFAULT_SESSION_ID
                                      })
         return resp
 
@@ -162,6 +162,7 @@ class WakeWordListener:
                     nlu_resp = self._request_nlu(interpreted_text).json()
                     print("Got this response from NLU")
                     print(nlu_resp)
+                    self._request_tts(nlu_resp[0]["text"])
                     #nl_response = nlg(nlu_resp['intent']['name'])
                     # print(f"\nResponding with the following:\n{nl_response}\n")
                     #self._request_tts(nl_response)
