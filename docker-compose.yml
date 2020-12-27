@@ -1,8 +1,10 @@
+version: "3.3"
+
 services:
   tts:
-    build: ./tts/pytts
-    context: ./tts/pytts
-    dockerfile: ./tts/pytts/Dockerfile
+    build: 
+      context: ./tts/pytts
+      # dockerfile: ./tts/pytts/Dockerfile
     devices:
       - "/dev/snd:/dev/snd"
     ports:
@@ -19,9 +21,8 @@ services:
     ports:
       - "5055:5055"
   stt:
-    build: ./stt
-    context: ./stt
-    dockerfile: ./stt/Dockerfile
+    build: 
+      context: ./stt
     devices:
       - "/dev/snd:/dev/snd"
     environment:
