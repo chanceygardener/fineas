@@ -162,7 +162,11 @@ class WakeWordListener:
                     nlu_resp = self._request_nlu(interpreted_text).json()
                     print("Got this response from NLU")
                     print(nlu_resp)
-                    self._request_tts(nlu_resp[0]["text"])
+                    try:
+                        self._request_tts(nlu_resp[0]["text"])
+                    except Exception as e:
+                        print("tts request failed from nlu response")
+                        print(type(e))
                     #nl_response = nlg(nlu_resp['intent']['name'])
                     # print(f"\nResponding with the following:\n{nl_response}\n")
                     #self._request_tts(nl_response)

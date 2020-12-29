@@ -32,6 +32,28 @@ stories:
 - story: toggle lights
   steps:
     - intent: toggle_lights
+      entities:
+      - which_light:  "office"
+      - desired_state: "off"
+    - action: action_toggle_light
+
+
+- story: toggle lights location unspecified
+  steps:
+    - intent: toggle_lights
+      entities:
+      - desired_state: "off"
+    - action: action_toggle_light
+    - intent: specify_location
+    - action: action_toggle_light
+
+- story: toggle lights state unspecified
+  steps:
+    - intent: toggle_lights
+      entities:
+      - which_light:  "office"
+    - action: action_toggle_light
+    - intent: specify_location
     - action: action_toggle_light
 
 - story: tell the time

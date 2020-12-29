@@ -3,14 +3,31 @@ version: "2.0"
 intents:
   - greet
   - goodbye
+  - specify_location
+  - thanks
   - affirm
   - deny
   - mood_great
   - mood_unhappy
   - bot_challenge
-  - toggle_lights
+  - toggle_lights:
+      use_entities:
+        - which_light
+        - desired_state
+
+      #use_entities: []
   - current_time
   - how_many_legs
+
+entities:
+  - desired_state
+  - which_light
+slots:
+  desired_state:
+    type: text
+  which_light:
+    type: text
+
 
 responses:
   utter_greet:

@@ -19,7 +19,6 @@ nlu:
 
 - intent: goodbye
   examples: |
-    - good afternoon
     - cu
     - good by
     - cee you later
@@ -109,11 +108,38 @@ nlu:
 - intent: toggle_lights
   examples: |
     - can you turn [off](desired_state) the lights
-    - turn [on](desired_state) the lights 
-    - let's [get some light](desired_state) in here
+    - turn [on](desired_state) the [office](which_light) lights
     - shut the light [off](desired_state)
     - turn the light [on](desired_state)
+    - would you turn the light [blue](desired_state)
+    - could you turn the light in the [living room](which_light) [green](desired_state)
+    - turn the light [on](desired_state) in the [office](which_light)
     - will you turn [on](desired_state) the [office](which_light) please?
+    - I'd like you to make the light go [red](desired_state)
+    - Turn the [office](which_light) light [green](desired_state)
+- intent: specify_location
+  examples: |
+    - The one in my [office](which_light)
+    - [all](which_light) of them, please
+    - Just the [lamp in the living room](which_light)
+    - The [hallway](which_light) lights
+    - The ones in the [kitchen](which_light)
+
+- intent: specify_light_state
+  examples: |
+    - Turn them [on](desired_state) please
+    - Turn it [off](desired_state)
+    - I'd like you to turn them [green](desired_state)
+    - Shut them [off](desired_state)
+    - Could you turn them [blue](desired_state)
+    - Please make them go [on](desired_state)
+    - I want them [on](desired_state)
+    - I'd like you to make them go [green](desired_state)
+    - [on](desired_state)
+    - [off](desired_state)
+    - [on](desired_state) please
+    - make it [red](desired_state)
+    - make it turn [on](desired_state)
 
 - intent: current_time
   examples: |
@@ -124,3 +150,37 @@ nlu:
     - what's the current time?
     - can you tell me what time it is?
     - can you tell us what time it is?
+
+- synonym: green
+  examples: |
+    - greenish
+    - more green
+    - leaf colored
+    - plant colored
+    - emerald
+- synonym: red
+  examples: |
+    - blood colored
+    - reddish
+    - crimson
+    - scarlet
+- synonym: blue
+  examples: |
+    - blueish
+    - azure
+    - sapphire
+    - cobalt
+- synonym: off
+  examples: |
+    - out
+    - inactive
+    - aff
+- synonym: on
+  examples: |
+    - lit
+    - active
+    - aln
+- synonym: white
+  examples: |
+    - regular light colored
+    - normal light

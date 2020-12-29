@@ -2,6 +2,8 @@ FROM python:3.8
 
 WORKDIR /app
 
+RUN mkdir /app/models
+
 COPY requirements.txt .
 
 RUN apt-get update \
@@ -9,6 +11,6 @@ RUN apt-get update \
 
 RUN pip install -r requirements.txt
 
-COPY . /app
+COPY *.py /app
 
 CMD ["python", "./server.py"]

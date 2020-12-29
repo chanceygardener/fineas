@@ -4,7 +4,6 @@ services:
   tts:
     build: 
       context: ./tts/pytts
-      # dockerfile: ./tts/pytts/Dockerfile
     devices:
       - "/dev/snd:/dev/snd"
     ports:
