@@ -13,7 +13,7 @@ from io import BytesIO
 import wave
 import struct
 import numpy as np
-from os import path, getcwd, remove
+from os import path, getcwd, remove, getenv
 
 
 DEFAULT_SESSION_ID = "fineas1"
@@ -24,12 +24,17 @@ CHANNELS = 1
 RATE = 16000
 RECORD_SECONDS = 5
 WAKE_WORDS = {"phineas"}
-STT_MODEL_PATH = "/home/chanceygardener/projects/fineas/stt/models/deepspeech-0.9.3-models.pbmm"
+STT_MODEL_PATH = getenv("STT_MODEL_PATH")
+if not STT_MODEL_PATH:
+    STT_MODEL_PATH = "models/deepspeech-0.9.3-models.pbmm"
 TTS_SERVER_ADDRESS = "http://0.0.0.0:5000/speak"
 NLU_SERVER_ADDRESS = "http://0.0.0.0:5005/webhooks/rest/webhook"
 ACKNOWLEDGEMENTS = {'what can I do you for?', 'yep?',
                     'can I help you?', 'at your service yo', "what's up?"}
-WAKE_WORD_MODEL_PATH = "models/phineas_linux_2021-01-22-utc_v1_9_0.ppn"
+WAKE_WORD_MODEL_PATH = getenv("WAKE_WORD_MODEL_PATH")
+if not WAKE_WORD_MODEL_PATH:
+
+    WAKE_WORD_MODEL_PATH = "models/phineas_linux_2021-01-22-utc_v1_9_0.ppn"
 
 app = Flask("STT_SERVER")
 

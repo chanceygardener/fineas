@@ -13,10 +13,13 @@ services:
 
   rasa_dialog:
     image: rasa/rasa
+    build:
+      context: ./nlu
     ports:
       - "5005:5005"
   rasa_action:
-    image: rasa/rasa
+    build:
+      context: ./nlu/actions
     ports:
       - "5055:5055"
   stt:
@@ -26,3 +29,10 @@ services:
       - "/dev/snd:/dev/snd"
     environment:
       FLASK_APP: server.py
+      STT_MODEL_PATH: /app/models/deepspeech-0.9.3-models.pbmm
+      WAKE_WORD_MODEL_PATH: /app/models/
+  external_services:
+    build:
+      context: ./services
+    ports:
+      - "8800:8800"

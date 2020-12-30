@@ -117,6 +117,11 @@ nlu:
     - will you turn [on](desired_state) the [office](which_light) please?
     - I'd like you to make the light go [red](desired_state)
     - Turn the [office](which_light) light [green](desired_state)
+- intent: get_weather
+  examples: |
+    - What's the weather like in [Pittsburgh](city)
+    - What's it like outside in [Pittsburgh](city)
+    - What's the weather like outside?
 - intent: specify_location
   examples: |
     - The one in my [office](which_light)
@@ -150,6 +155,13 @@ nlu:
     - what's the current time?
     - can you tell me what time it is?
     - can you tell us what time it is?
+
+- synonym: office
+  examples: |
+    - study
+    - computer room
+    - offic
+    - offis
 
 - synonym: green
   examples: |

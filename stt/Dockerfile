@@ -4,6 +4,12 @@ WORKDIR /app
 
 RUN mkdir /app/models
 
+COPY ./models/*.ppn /app/models/
+
+COPY ./models/*.pbmm /app/models/
+
+COPY ./models/*models.scorer /app/models
+
 COPY requirements.txt .
 
 RUN apt-get update \
@@ -11,6 +17,6 @@ RUN apt-get update \
 
 RUN pip install -r requirements.txt
 
-COPY *.py /app
+COPY *.py /app/
 
 CMD ["python", "./server.py"]
