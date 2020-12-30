@@ -14,8 +14,12 @@ intents:
       use_entities:
         - which_light
         - desired_state
-
-      #use_entities: []
+  - specify_location:
+      use_entities:
+        - which_light
+  - specify_light_state:
+      use_entities:
+        - desired_state
   - current_time
   - how_many_legs
 
