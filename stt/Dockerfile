@@ -4,11 +4,9 @@ WORKDIR /app
 
 RUN mkdir /app/models
 
-COPY ./models/*.ppn /app/models/
+COPY download_model.sh /app
 
-COPY ./models/*.pbmm /app/models/
-
-COPY ./models/*models.scorer /app/models
+RUN ./download_model.sh
 
 COPY requirements.txt .
 
@@ -19,4 +17,4 @@ RUN pip install -r requirements.txt
 
 COPY *.py /app/
 
-CMD ["python", "./server.py"]
+CMD waitress-serve server:app
