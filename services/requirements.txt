@@ -33,6 +33,7 @@ tenacity==6.3.1
 toml==0.10.2
 typing-extensions==3.7.4.3
 urllib3==1.26.2
+waitress==2.0.0
 Werkzeug==1.0.1
 wolframalpha==4.1.1
 xmltodict==0.12.0
