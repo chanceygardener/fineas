@@ -17,3 +17,4 @@ requests==2.25.1
 scipy==1.5.4
 urllib3==1.26.2
 Werkzeug==1.0.1
+waitress==2.0.0

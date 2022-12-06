@@ -27,6 +27,13 @@ services:
       context: ./stt
     devices:
       - "/dev/snd:/dev/snd"
+    volumes:
+      - type: volumes
+        source: models
+        target: /app/models
+        volume:
+          nocopy: true
+
     environment:
       FLASK_APP: server.py
       STT_MODEL_PATH: /app/models/deepspeech-0.9.3-models.pbmm
